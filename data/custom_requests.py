@@ -49,31 +49,30 @@ class CourierRequests(BaseRequests):
     @allure.step('Создаем курьера, отправив запрос POST. Ожидаем статус респонса {status}')
     def post_create_courier(self, data=None, status=201):
         url = f"{self.host}{self.courier_handler}"
-        return BaseRequests().exec_post_request_and_check(url, data=data, status=status)
+        return self.exec_post_request_and_check(url, data=data, status=status)
 
     @allure.step('Логиним курьера, отправив запрос POST. Ожидаем статус респонса {status}')
     def post_login_courier(self, data=None, status=200):
         url = f"{self.host}{self.courier_login_handler}"
-        return BaseRequests().exec_post_request_and_check(url, data=data, status=status)
+        return self.exec_post_request_and_check(url, data=data, status=status)
 
     @allure.step('Удаляем курьера, отправив запрос DELETE. Ожидаем статус респонса {status}')
-    def delete_courier(self, data=None, courier_id=None, status=200):
+    def delete_courier(self, courier_id=None, status=200):
         url = f"{self.host}{self.courier_handler}/{courier_id}"
         delete_payload = {"id": courier_id}
-        return BaseRequests().exec_delete_request_and_check(url, data=data, status=status)
+        return self.exec_delete_request_and_check(url, data=delete_payload, status=status)
 
 
 class OrderRequests(BaseRequests):
     order_handler = '/api/v1/orders'
-    order_cancel_handler = '/api/v1/orders/cancel'
 
     @allure.step('Создаем заказ, отправив запрос POST. Ожидаем статус респонса {status}')
     def post_create_order(self, data=None, status=201):
         url = f"{self.host}{self.order_handler}"
-        return BaseRequests().exec_post_request_and_check(url, data=json.dumps(data), status=status)
+        return self.exec_post_request_and_check(url, data=json.dumps(data), status=status)
 
     @allure.step('Получаем список заказов, отправив запрос GET. Ожидаем статус респонса {status}')
     def get_orders_list(self, status=200):
         url = f"{self.host}{self.order_handler}"
-        return BaseRequests().exec_get_request_and_check(url, status=status)
+        return self.exec_get_request_and_check(url, status=status)
 

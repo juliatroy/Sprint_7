@@ -4,15 +4,15 @@ import allure
 from data.custom_requests import CourierRequests
 
 
-@allure.title('Проверка создания курьера')
+@allure.feature('Проверка создания курьера')
 class TestCreateCourier:
-    @allure.description('Можно создать курьера со случайным логином')
+    @allure.title('Можно создать курьера со случайным логином')
     def test_can_create_courier(self, create_user_payload):
         payload = create_user_payload(login='rand', password='1234', firstname='saske')
         resp = CourierRequests().post_create_courier(data=payload)
         assert resp['ok']
 
-    @allure.description('Нельзя создать двух курьеров с одинаковыми логинами')
+    @allure.title('Нельзя создать двух курьеров с одинаковыми логинами')
     def test_cant_create_courier_dupes(self, create_user_payload):
         payload = create_user_payload(login='rand', password='1234', firstname='saske')
         CourierRequests().post_create_courier(data=payload)
@@ -28,7 +28,7 @@ class TestCreateCourier:
                                  [None, '1234', None],
                                  ['rand', None, None]
                              ])
-    @allure.description('Для создания курьера необходимо задать все обязательные поля (логин, пароль)')
+    @allure.title('Для создания курьера необходимо задать все обязательные поля (логин, пароль)')
     def test_all_the_fields_are_required(self, payload_schema, create_user_payload):
         payload = create_user_payload(login=payload_schema[0], password=payload_schema[1],
                                       firstname=payload_schema[2])

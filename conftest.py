@@ -50,12 +50,11 @@ def make_courier_and_login():
 
     def _make_courier(data):
         nonlocal courier
-        created_courier = CourierRequests().post_create_courier(data=data)
-        logged_in_courier = CourierRequests().post_login_courier(data=data)
+        courier_requests = CourierRequests()
+        created_courier = courier_requests.post_create_courier(data=data)
+        logged_in_courier = courier_requests.post_login_courier(data=data)
         courier = {"created_courier": created_courier, "logged_in_courier": logged_in_courier}
         return courier
 
     yield _make_courier
     CourierRequests().delete_courier(courier_id=courier['logged_in_courier']['id'])
-
-
